@@ -1,0 +1,44 @@
+[
+{
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+        "name": "Ipone",
+        "description": "256 Gb",
+        "image": "",
+        "category": 5,
+        "price": 100000,
+        "created_at": "2025-08-30",
+        "updated_at": "2025-08-30"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+        "name": "Samsung",
+        "description": "128 Gb",
+        "image": "",
+        "category": 5,
+        "price": 79999,
+        "created_at": "2025-08-30",
+        "updated_at": "2025-08-30"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+        "name": "Смартфоны",
+        "description": "Лучшие смартфоны по доступным ценам"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 6,
+    "fields": {
+        "name": "Ноутбуки",
+        "description": "Лучшие ноутбуки"
+    }
+}
+]
