@@ -5,8 +5,8 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Главная</a></li>
-            <li class="breadcrumb-item"><a href="/">{{ product.category }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+            <li class="breadcrumb-item"><a href="/">{{ object.category }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ object.name }}</li>
         </ol>
     </nav>
 </div>
@@ -17,16 +17,16 @@
         <div class="col-6">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
+                    <h4 class="my-0 font-weight-normal">{{ object.name }}</h4>
                 </div>
-                <img class="m-5" src="{{ product.image | media_filter }}">
+                <img class="m-5" src="{{ object.image | media_filter }}">
                 <div class="card-body d-grid gap-2">
-                    <h1 class="card-title pricing-card-title text-end">{{ product.price|floatformat:"-3g" }} р.</h1>
-                    <p class="card-text text-start">Категория: {{ product.category }}</p>
+                    <h1 class="card-title pricing-card-title text-end">{{ object.price|floatformat:"-3g" }} р.</h1>
+                    <p class="card-text text-start">Категория: {{ object.category }}</p>
                     <p class="card-text text-start">Описание:</p>
-                    <p class="card-text text-start">{{ product.description }}</p>
-                    <p class="card-text text-end">Дата создания товара: {{ product.created_at }}</p>
-                    <p class="card-text text-end">Дата последнего изменения: {{ product.updated_at }}</p>
+                    <p class="card-text text-start">{{ object.description }}</p>
+                    <p class="card-text text-end">Дата создания товара: {{ object.created_at }}</p>
+                    <p class="card-text text-end">Дата последнего изменения: {{ object.updated_at }}</p>
                     <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
                 </div>
             </div>

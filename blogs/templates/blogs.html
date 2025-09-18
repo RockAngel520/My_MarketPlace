@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Блог магазина Skystore</h1>
+</div>
+
+<div class="container">
+    <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto  ">
+        <a class="btn btn-primary" href="{% url 'blogs:blog_create' %}">Создать запись блога</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row text-center">
+        {% for blog in object_list %}
+        <div class="col-3">
+            <div class="card mb-4 box-shadow">
+                <img src="{{ blog.image | media_filter }}">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ blog.title }}</h4>
+                </div>
+                <div class="pt-md-2 pb-md-2 mx-auto">
+                    <a class="btn btn-primary" href="{% url 'blogs:blog' blog.pk %}">Посмотреть</a>
+                    <a class="btn btn-secondary" href="{% url 'blogs:blog_update' blog.pk %}">Редактировать</a>
+                    <a class="btn btn-danger" href="{% url 'blogs:blog_delete' blog.pk %}">Удалить</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
