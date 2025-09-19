@@ -8,6 +8,12 @@
 </div>
 
 <div class="container">
+    <div class="px-3 pb-md-4 mx-auto  ">
+        <a class="btn btn-primary" href="{% url 'catalog:product_create' %}">Создать новый товар</a>
+    </div>
+</div>
+
+<div class="container">
     <div class="row text-center">
         {% for product in object_list %}
         <div class="col-3">
@@ -21,6 +27,13 @@
                     <p class="card-text">{{ product.description|truncatechars:100 }}</p>
                     <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:catalog' product.pk %}">Купить
                     </a>
+                    <div class="pt-md-2 pb-md-2 mx-auto">
+
+                        <a class="btn btn-secondary"
+                           href="{% url 'catalog:product_update' product.pk %}">Редактировать</a>
+                        <a class="btn btn-danger"
+                           href="{% url 'catalog:product_confirm_delete' product.pk %}">Удалить</a>
+                    </div>
                 </div>
             </div>
         </div>
