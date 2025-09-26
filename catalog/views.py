@@ -1,4 +1,4 @@
-from django.forms import inlineformset_factory
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 
@@ -11,19 +11,19 @@ class ProductListView(ListView):
     template_name = 'home.html'
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'catalog.html'
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     template_name = 'product_create.html'
     form_class = ProductForm
     success_url = reverse_lazy('catalog:home')
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     template_name = 'product_update.html'
     form_class = ProductForm
@@ -33,7 +33,7 @@ class ProductUpdateView(UpdateView):
         return reverse('catalog:catalog', args=[self.kwargs.get('pk')])
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = 'product_confirm_delete.html'
     success_url = reverse_lazy('catalog:home')
@@ -41,4 +41,3 @@ class ProductDeleteView(DeleteView):
 
 class ContactsTemplateView(TemplateView):
     template_name = 'contacts.html'
-
