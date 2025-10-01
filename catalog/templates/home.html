@@ -17,6 +17,7 @@
     <div class="row text-center">
         {% for product in object_list %}
         <div class="col-3">
+            {% if product.is_publish == True %}
             <div class="card mb-4 box-shadow">
                 <img src="{{ product.image | media_filter }}">
                 <div class="card-header">
@@ -28,14 +29,18 @@
                     <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:catalog' product.pk %}">Купить
                     </a>
                     <div class="pt-md-2 pb-md-2 mx-auto">
-
+                        {% if user == product.owner or perms.catalog.can_unpublish_product %}
                         <a class="btn btn-secondary"
                            href="{% url 'catalog:product_update' product.pk %}">Редактировать</a>
+                        {% endif %}
+                        {% if perms.catalog.can_unpublish_product %}
                         <a class="btn btn-danger"
                            href="{% url 'catalog:product_confirm_delete' product.pk %}">Удалить</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
         {% endfor %}
     </div>
