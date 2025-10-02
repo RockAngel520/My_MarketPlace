@@ -13,8 +13,8 @@ class Command(BaseCommand):
         category, _ = Category.objects.get_or_create(name='Смартфоны', description='Лучшие смартфоны по доступным ценам')
 
         phones = [
-            {'name': 'Ipone', 'description': '256 Gb', 'price': 100000, 'category': category},
-            {'name': 'Samsung', 'description': '128 Gb', 'price': 80000, 'category': category},
+            {'name': 'Ipone', 'description': '256 Gb', 'price': 100000, 'category': category, 'is_publish': True},
+            {'name': 'Samsung', 'description': '128 Gb', 'price': 80000, 'category': category, 'is_publish': True},
         ]
 
         for phone_data in phones:

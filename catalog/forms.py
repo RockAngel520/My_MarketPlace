@@ -27,7 +27,7 @@ class StyleFormMixin:
 class ProductForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Product
-        fields = "__all__"
+        exclude = ("owner",)
 
     def clean_price(self):
         price = self.cleaned_data['price']
@@ -49,3 +49,9 @@ class ProductForm(StyleFormMixin, ModelForm):
             if banned_word in description.lower():
                 raise ValidationError("Не используйте запрещенные слова")
         return description
+
+
+class ProductModeratorForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Product
+        fields = ("is_publish",)
