@@ -1,15 +1,31 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 
 from catalog.forms import ProductForm, ProductModeratorForm
-from catalog.models import Product
+from catalog.models import Product, Category
+from catalog.services import get_products_from_cashe, get_products_from_category
 
 
 class ProductListView(ListView):
     model = Product
     template_name = 'home.html'
+
+    def get_queryset(self):
+        return get_products_from_cashe()
+
+
+class CategoryDetailView(DetailView):
+    model = Category
+    template_name = 'category.html'
+    context_object_name = 'category'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_id = self.kwargs.get('pk')
+        context['products'] = get_products_from_category(category_id)
+        return context
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
@@ -49,16 +65,16 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         raise PermissionDenied
 
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
     template_name = 'product_confirm_delete.html'
     success_url = reverse_lazy('catalog:home')
 
-    def get_form_class(self):
+    def test_func(self):
+        """Проверяет, имеет ли пользователь право удалять продукт"""
         user = self.request.user
-        if user.has_perm("catalog.can_unpublish_product"):
-            return ProductForm
-        raise PermissionDenied
+        # Разрешаем удаление модератору
+        return user.has_perm("catalog.can_unpublish_product")
 
 
 class ContactsTemplateView(TemplateView):

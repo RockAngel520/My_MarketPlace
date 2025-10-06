@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Главная</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ category.name }}</li>
+        </ol>
+    </nav>
+</div>
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">{{ category.name }}</h1>
+    <p class="lead">{{ category.description }}</p>
+</div>
+
+<div class="container">
+    <div class="px-3 pb-md-4 mx-auto  ">
+        <a class="btn btn-primary" href="{% url 'catalog:product_create' %}">Создать новый товар</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row text-center">
+        {% for product in products %}
+        <div class="col-3">
+            {% if product.is_publish == True %}
+            <div class="card mb-4 box-shadow">
+                <img src="{{ product.image | media_filter }}">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{ product.price|floatformat:"-3g" }} р.</h1>
+                    <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+                    <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:catalog' product.pk %}">Купить
+                    </a>
+                    <div class="pt-md-2 pb-md-2 mx-auto">
+                        {% if user == product.owner or perms.catalog.can_unpublish_product %}
+                        <a class="btn btn-secondary"
+                           href="{% url 'catalog:product_update' product.pk %}">Редактировать</a>
+                        {% endif %}
+                        {% if perms.catalog.can_unpublish_product %}
+                        <a class="btn btn-danger"
+                           href="{% url 'catalog:product_confirm_delete' product.pk %}">Удалить</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
