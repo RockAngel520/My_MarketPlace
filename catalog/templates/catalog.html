@@ -5,7 +5,9 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Главная</a></li>
-            <li class="breadcrumb-item"><a href="/">{{ object.category }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'catalog:category' object.category.pk %}">
+                {{ object.category.name }}
+            </a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ object.name }}</li>
         </ol>
     </nav>
@@ -30,7 +32,8 @@
                     <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
                     <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto  ">
                         {% if user == product.owner or perms.catalog.can_unpublish_product %}
-                        <a class="btn btn-primary" href="{% url 'catalog:product_update' product.pk %}">Редактировать</a>
+                        <a class="btn btn-primary"
+                           href="{% url 'catalog:product_update' product.pk %}">Редактировать</a>
                         {% endif %}
                         {% if perms.catalog.can_unpublish_product %}
                         <a class="btn btn-danger"
